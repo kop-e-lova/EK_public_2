@@ -1,0 +1,7 @@
+per_cent = {"ТКB": 5.6, "СКВ": 5.9, "ВТБ": 4.28, "СБЕР": 4.0}
+List_per_cent = list(per_cent.values())
+money = input("Введите интересующую Вас сумму:")
+deposit_float = list(map(lambda x: x * float(money)/100, List_per_cent))
+deposit = list(map(int, deposit_float))
+print(deposit)
+print("Максимальная сумма, которую Вы можете заработать, это", max(deposit))
