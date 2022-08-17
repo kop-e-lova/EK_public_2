@@ -1,0 +1,22 @@
+tickets_num = int(input("Здравствуйте, сколько билетов Вы бы хотели приобрести?:"))
+age = list(map(int, input("Введите, пожалуйста, через пробел возраст посетителей:").split()))
+while tickets_num != len(age):
+    age = list(map(int, input("Количество посетителей не соответствует количеству билетов! \n"
+                              "Укажите через пробел возраст посетителей: ").split()))
+total_price = []
+for i in age:
+ if i in range(0, 18):
+    total_price.append (0)
+ elif i in range(18, 25):
+    total_price.append(990)
+else:
+    total_price.append(1390)
+if tickets_num > 3:
+    print("Cумма Вашего заказа:", sum(total_price) - (sum(total_price) * 0.1), "рублей")
+else: print("Cумма Вашего заказа:", sum(total_price), "рублей.")
+print("\n"
+      "Пояснения к заказу: \n"
+       "Бесплатно для посетителей до 18 лет; \n"
+       "990 рублей за билет для лиц от 18 до 25 лет; \n"
+       "1390 рублей за билет для лиц старше 25 лет; \n"
+       "При заказе от 4 билетов действует скидка 10%.")
