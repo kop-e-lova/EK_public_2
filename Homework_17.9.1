@@ -1,0 +1,62 @@
+array = list(map(int,input('Введите любую последовательность чисел через пробел:').split()))
+some_number = int(input('Введите любое число:'))
+while some_number:
+    if some_number <= min(array):
+        print('Введённое Вами число меньше минимального числа, введённого Вами.\n '
+              'Введите число, которое будет не меньше минимального\n '
+              'из набранной Вами поcледовательности:')
+        some_number = int(input('Введите число, соответствующее критериям поиска:'))
+    elif some_number > max(array):
+        print('Введённое Вами число больше максимального значения, введённого Вами\n '
+              'Введите число, которое будет не больше максимального\n '
+              'из набранной Вами последовательности:')
+        some_number = int(input('Введите число, соответствующее критериям поиска:'))
+    else:
+        break
+
+def merge_sort(array):
+    if len(array) < 2:
+        return array[:]
+    else:
+        middle = len(array) // 2
+        left = merge_sort(array[:middle])
+        right = merge_sort(array[middle:])
+        return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i, j = 0, 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    while i < len(left):
+        result.append(left[i])
+        i += 1
+
+    while j < len(right):
+        result.append(right[j])
+        j += 1
+
+    return result
+
+print(merge_sort(array))
+
+def binary_search(array, some_number, left, right):
+    if left > right or some_number == max(array) or some_number == min(array):
+        return False
+
+    middle = (right + left) // 2
+    if array[middle] == some_number:
+        return middle
+    elif some_number < array[middle]:
+        return binary_search(array, some_number, left, middle-1)
+    else:
+        return binary_search(array, some_number, right, middle+1)
+
+print(binary_search(array, some_number, 0, len(array)))
