@@ -1,0 +1,20 @@
+import requests
+
+status_available = "available"
+status_sold = "sold"
+res_available = requests.get( f"https://petstore.swagger.io/v2/pet/findByStatus?status={status_available}", headers={'accept': 'application/json'})
+res_sold = requests.get( f"https://petstore.swagger.io/v2/pet/findByStatus?status={status_sold}", headers={'accept': 'application/json'})
+print(res_available.status_code)
+print(res_available.text)
+print(res_available.json())
+print(type(res_available.json()))
+
+print(res_sold.status_code)
+print(res_sold.text)
+print(res_sold.json())
+print(type(res_sold.json()))
+username = 'username1'
+password = 'password2'
+
+r = requests.get(f'https://petstore.swagger.io/v2/user/login?username={username}&password={password}')
+print(r.text)
