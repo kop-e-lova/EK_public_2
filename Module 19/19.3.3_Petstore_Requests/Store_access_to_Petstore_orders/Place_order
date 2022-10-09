@@ -12,6 +12,6 @@ data = json.dumps({
 
 headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
 
-res_place_order = requests.post(f'https://petstore.swagger.io/v2/pet', headers=headers, data=data)
+res_place_order = requests.post(f'https://petstore.swagger.io/v2/store/order', headers=headers, data=data)
 print(res_place_order)
 print(res_place_order.text)
