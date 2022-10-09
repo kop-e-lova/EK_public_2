@@ -1,0 +1,20 @@
+import requests
+import json
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+
+headers = {'accept': 'application/json',
+           'Content-Type': 'multipart/form-data'}
+pet_photo = 'Kitten.jpg'
+data = MultipartEncoder(
+    fields={
+        'name': 'Kit-Kat',
+        'animal_type': 'cat',
+        'age': 2,
+        'pet_photo': (pet_photo, open(pet_photo, 'rb'), 'image/jpeg')}
+)
+
+res = requests.post(f'https://petstore.swagger.io/v2/pet/9223372036854254000/uploadImage', headers=headers, data=data)
+
+#файл с фото животного: Kitten.jpg, должен располагаться в том же директории, что и файл с запросом (согласно этому коду)
+#изображение загружается к животному с ID: 9223372036854254000 
+#важно!!! данное животное (с указанным ID) имеется в базе
