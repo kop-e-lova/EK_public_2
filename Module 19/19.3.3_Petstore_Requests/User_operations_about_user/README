@@ -1,0 +1,9 @@
+Содержание директория: User_operations_about_user
+
+POST запрос: СreateWithArray
+POST запрос: СreateWithList
+GET запрос: GetUser_by_name
+PUT запрос: UpdateUser
+DELETE запрос: DelUser
+GET запрос: Login
+GET запрос: Logout
