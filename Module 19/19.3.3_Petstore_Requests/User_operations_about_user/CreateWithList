@@ -1,0 +1,21 @@
+import requests
+import json
+
+data = json.dumps([
+  {
+    "id": 4567812,
+    "username": "Some_user2",
+    "firstName": "ANNA",
+    "lastName": "Petrova",
+    "email": "ANNrpetr@ya.ry",
+    "password": "123",
+    "phone": "123-45-67",
+    "userStatus": 0
+  }
+])
+
+headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
+
+UserWithList = requests.post(f'https://petstore.swagger.io/v2/user/createWithList', headers=headers, data=data)
+print(UserWithList)
+print(UserWithList.text)
