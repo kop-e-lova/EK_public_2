@@ -3,6 +3,12 @@ import json
 
 User_login = requests.get( f'https://petstore.swagger.io/v2/user/login?username=Some_user&password=123', headers={'accept': 'application/json'})
 
+User_logout = requests.get( f'https://petstore.swagger.io/v2/user/logout', headers={'accept': 'application/json'})
+
 print(User_login)
 print(User_login.text)
 print(User_login.json())
+
+print(User_logout)
+print(User_logout.text)
+print(User_logout.json())
