@@ -1,0 +1,23 @@
+import requests
+import json
+
+headers = {'accept': 'application/json',
+           'Content-Type': 'application/json',
+           'petId': '9223372036854256000'}
+
+data = json.dumps({
+  "id": 12345678,
+  "username": "Some_user_5_1",
+  "firstName": "Anna",
+  "lastName": "Petrova",
+  "email": "string",
+  "password": "123",
+  "phone": "string",
+  "userStatus": 0
+})
+
+res = requests.put(f"https://petstore.swagger.io/v2/user/Some_user_5", headers=headers, data=data)
+print(res.status_code)
+print(res.text)
+print(res.json())
+print(type(res.json()))
