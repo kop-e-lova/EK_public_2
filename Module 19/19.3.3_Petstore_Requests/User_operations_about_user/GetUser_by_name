@@ -1,0 +1,8 @@
+import requests
+import json
+
+User = requests.get( f'https://petstore.swagger.io/v2/user/Some_user', headers={'accept': 'application/json'})
+
+print(User)
+print(User.text)
+print(User.json())
