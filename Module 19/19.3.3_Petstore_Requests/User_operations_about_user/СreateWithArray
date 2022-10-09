@@ -1,0 +1,21 @@
+import requests
+import json
+
+data = json.dumps([
+  {
+    "id": 987654,
+    "username": "Person2",
+    "firstName": "Petrov",
+    "lastName": "Ivan",
+    "email": "Petrovich",
+    "password": "123",
+    "phone": "123-45-67",
+    "userStatus": 0
+  }
+])
+
+headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
+
+UserWithArray = requests.post(f'https://petstore.swagger.io/v2/user/createWithArray', headers=headers, data=data)
+print(UserWithArray)
+print(UserWithArray.text)
