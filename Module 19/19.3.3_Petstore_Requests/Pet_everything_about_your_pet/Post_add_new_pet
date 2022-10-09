@@ -1,0 +1,25 @@
+import requests
+import json
+
+data = json.dumps({
+    "id": 0,
+    "category": {
+        "id": 12345179,
+        "name": "Homa4"
+    },
+    "name": "Hamster",
+    "photoUrls": ['string'],
+    "tags": [
+        {
+            "id": 0,
+            "name": "string"
+        }
+    ],
+    "status": "available"
+})
+
+headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
+
+res_add_new_pet = requests.post(f'https://petstore.swagger.io/v2/pet', headers=headers, data=data)
+print(res_add_new_pet)
+print(res_add_new_pet.text)
