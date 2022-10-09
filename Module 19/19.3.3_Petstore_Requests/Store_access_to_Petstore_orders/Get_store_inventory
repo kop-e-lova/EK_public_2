@@ -1,0 +1,8 @@
+import requests
+import json
+
+headers = {'accept': 'application/json', 'api_key': 'special-key'}
+
+store_inventory = requests.get(f'https://petstore.swagger.io/v2/store/inventory', headers=headers)
+print(store_inventory)
+print(store_inventory.text)
