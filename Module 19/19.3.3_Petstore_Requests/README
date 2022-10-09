@@ -1,0 +1,35 @@
+Учебное задание 19.3.3. запросы 
+SwaggerPetstore: https://petstore.swagger.io/v2/swagger.json
+
+СОДЕРЖАНИЕ: 
+
+Раздел: Pet_everything_about_your_pet:
+
+Содержание директория:
+POST запрос на загрузку фото животного (по имеющемуся ID животного)
+POST запрос - добавление нового животного
+PUT запрос - обновление информации о существующем животном
+GET запрос - по статусу животного (available, sold)
+GET запрос - найти животного по ID
+POST запрос - обновить информацию о животном по существующему ID животного
+DELETE запрос на удаление животного
+
+
+Раздел: Store_access_to_Petstore_orders
+
+Содержание директория:
+POST запрос на размещение заказа на покупку животного: place_order
+GET запрос на нахождение заказа по ID: get_order_id
+DELETE запрос на удаление заказа
+GET запрос: возвращает сопоставление кодов состояния с количеством 
+
+
+Раздел: User_operations_about_user
+
+Содержание директория
+
+POST запрос: СreateWithArray
+POST запрос: СreateWithList
+GET запрос: GetUser_by_name
+PUT запрос: UpdateUser
+DELETE запрос: DelUser
