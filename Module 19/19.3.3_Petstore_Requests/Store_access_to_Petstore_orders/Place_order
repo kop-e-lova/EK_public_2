@@ -1,0 +1,17 @@
+import requests
+import json
+
+data = json.dumps({
+    "id": 12345,
+    "petId": 1234567,
+    "quantity": 1,
+    "shipDate": "2022-10-09T16:26:44.960Z",
+    "status": "placed",
+    "complete": True
+})
+
+headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
+
+res_place_order = requests.post(f'https://petstore.swagger.io/v2/pet', headers=headers, data=data)
+print(res_place_order)
+print(res_place_order.text)
