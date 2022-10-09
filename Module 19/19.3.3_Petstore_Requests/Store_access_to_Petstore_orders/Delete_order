@@ -1,0 +1,8 @@
+import requests
+import json
+
+headers = {'accept': 'application/json', 'api_key': 'special-key'}
+
+del_order = requests.delete(f'https://petstore.swagger.io/v2/store/order/123', headers=headers)
+print(del_order)
+print(del_order.text)
