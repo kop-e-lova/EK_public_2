@@ -1,0 +1,6 @@
+valid_email = "kiryablogger@yandex.ru"
+valid_password = "12345"
+invalid_email = "invalid@mail.ru"
+invalid_password = 'invalid'
+invalid_auth_key = 'invalid_auth'
+other_email = "some_tester_89@mail.ru"
