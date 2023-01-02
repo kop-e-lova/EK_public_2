@@ -1,0 +1,46 @@
+from base_page import BasePage
+from locators import AuthLocators
+
+import time,os
+from selenium.webdriver.common.by import By
+
+class AuthPage(BasePage):
+   def __init__(self, driver, timeout=10):
+       super().__init__(driver, timeout)
+       url = "http://b2c.passport.rt.ru"
+       driver.get(url)
+       #создаем нужные элементы
+       self.username = driver.find_element(By.ID, "username")
+       self.password = driver.find_element(By.ID, "password")
+       self.btn = driver.find_element(By.ID, "kc-login")
+       self.reg_in = driver.find_element(*AuthLocators.AUTH_REG_IN)
+       #self.form_error = driver.find_element(*AuthLocators.AUTH_FORM_ERROR)
+       #self.reg_in_temp_code = driver.find_element(*AuthLocators.AUTH_REG_IN_TEMP_CODE)
+
+   #Авторизация по телефону
+   def auth_by_phone(self):
+       self.find_element(AuthLocators.AUTH_PHONE, time = 10).click()
+
+   # Авторизация по электронной почте
+   def auth_by_email(self):
+       self.find_element(AuthLocators.AUTH_EMAIL, time = 10). click()
+
+   # Авторизация по логину
+   def auth_by_login(self):
+       self.find_element(AuthLocators.AUTH_LOGIN_TAB, time = 10).click()
+
+   # Авторизация по лицевому счету
+   def auth_by_LS(self):
+       self.find_element(AuthLocators.AUTH_LS_TAB, time = 10).click()
+
+   #Передача электронного адреса ???? может быть, здесь не email, a userame
+   def enter_username(self, value):
+       self.username.send_keys(value)
+
+   # Передача пароля
+   def enter_pass(self, value):
+       self.password.send_keys(value)
+
+   #Кликнуть кнопкой
+   def btn_click(self):
+       self.btn.click()
