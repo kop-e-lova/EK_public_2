@@ -118,7 +118,7 @@ def test_auth_page_empty_email():
    driver.implicitly_wait(10)
    auth_page = AuthPage(driver)
    auth_page.go_to_site()
-   auth_page.auth_by_phone()
+   auth_page.auth_by_email()
    driver.find_element(By.ID, 't-btn-tab-mail').click()
    driver.find_element(By.ID, "username").send_keys("")
    driver.find_element(By.ID, "password").send_keys(password)
@@ -133,7 +133,7 @@ def test_auth_page_empty_login():
    driver.implicitly_wait(10)
    auth_page = AuthPage(driver)
    auth_page.go_to_site()
-   auth_page.auth_by_phone()
+   auth_page.auth_by_login()
    driver.find_element(By.ID, 't-btn-tab-login').click()
    driver.find_element(By.ID, "username").send_keys("")
    driver.find_element(By.ID, "password").send_keys(password)
@@ -148,7 +148,7 @@ def test_auth_page_empty_LS():
    driver.implicitly_wait(10)
    auth_page = AuthPage(driver)
    auth_page.go_to_site()
-   auth_page.auth_by_phone()
+   auth_page.auth_by_LS()
    driver.find_element(By.ID, 't-btn-tab-ls').click()
    driver.find_element(By.ID, "username").send_keys("")
    driver.find_element(By.ID, "password").send_keys(password)
@@ -156,3 +156,183 @@ def test_auth_page_empty_LS():
    driver.implicitly_wait(10)
    #assert auth_page.get_relative_link() != '/account_b2c/page'
    assert driver.find_element(By.XPATH,'//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/span').text == "Введите номер вашего лицевого счета"
+
+#13 Незаполненное поле "пароль"; номер телефона корректный
+def test_auth_page_phone_empty_pass():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_phone()
+   driver.find_element(By.ID, 't-btn-tab-phone').click()
+   driver.find_element(By.ID, "username").send_keys(phone_number)
+   driver.find_element(By.ID, "password").send_keys("")
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.ID, "kc-login").is_enabled()
+   
+   #14 Незаполненное поле "пароль"; email корректный
+def test_auth_page_phone_empty_pass():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_email()
+   driver.find_element(By.ID, 't-btn-tab-mail').click()
+   driver.find_element(By.ID, "username").send_keys(email)
+   driver.find_element(By.ID, "password").send_keys("")
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.ID, "kc-login").is_enabled()
+   
+   #15 Незаполненное поле "пароль"; логин корректный
+def test_auth_page_phone_empty_pass():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_login()
+   driver.find_element(By.ID, 't-btn-tab-login').click()
+   driver.find_element(By.ID, "username").send_keys(login)
+   driver.find_element(By.ID, "password").send_keys("")
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   #assert auth_page.get_relative_link() != '/account_b2c/page'
+   assert driver.find_element(By.ID, "kc-login").is_enabled()
+   
+   #16 Незаполненное поле "пароль"; лицевой счёт корректный
+def test_auth_page_phone_empty_pass():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_LS()
+   driver.find_element(By.ID, 't-btn-tab-ls').click()
+   driver.find_element(By.ID, "username").send_keys(account)
+   driver.find_element(By.ID, "password").send_keys("")
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   #assert auth_page.get_relative_link() != '/account_b2c/page'
+   assert driver.find_element(By.ID, "kc-login").is_enabled()
+   
+   #17 Существующий телефонный номер, не привязанный к УЗ, пароль от УЗ
+def test_auth_page_other_phone():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_phone()
+   driver.find_element(By.ID, 't-btn-tab-phone').click()
+   driver.find_element(By.ID, "username").send_keys("+7 921 776-70-34")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   #assert auth_page.get_relative_link() != '/account_b2c/page'
+   assert driver.find_element(By.ID, "form-error-message").text == "Неверный логин или пароль"
+   
+   #18 Существующий еmail, не привязанный к УЗ, пароль от УЗ
+def test_auth_page_other_email():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_email()
+   driver.find_element(By.ID, 't-btn-tab-mail').click()
+   driver.find_element(By.ID, "username").send_keys("kiryabloger@ya.ru")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.ID, "form-error-message").text == "Неверный логин или пароль"
+   
+   #19 Существующий логин, не привязанный к УЗ, пароль от УЗ
+def test_auth_page_other_email():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_login()
+   driver.find_element(By.ID, 't-btn-tab-login').click()
+   driver.find_element(By.ID, "username").send_keys("lk_20449175")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.ID, "form-error-message").text == "Неверный логин или пароль"
+   
+   #20 Существующий лицевой счет, не привязанный к УЗ данного пользователя, пароль от УЗ
+def test_auth_page_other_email():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_LS()
+   driver.find_element(By.ID, 't-btn-tab-ls').click()
+   driver.find_element(By.ID, "username").send_keys("2451646457")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.ID, "form-error-message").text == "Неверный логин или пароль"
+   
+ #21 Неверный номер телефона (буквы, латиница)
+def test_auth_page_phone_latin():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-phone').click()
+   driver.find_element(By.ID, "username").send_keys("slkdjfls")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.ID, "form-error-message").text == "Неверный логин или пароль"
+   
+   #22 Неверный email (набор специальных символов)
+def test_auth_page_phone_latin():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-mail').click()
+   driver.find_element(By.ID, "username").send_keys(")(**?*?:*?:%*")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.XPATH, '//*[@id="form-error-message"]').text == 'Неверный логин или пароль'
+   
+   #23 Неверный логин (набор специальных символов)
+def test_auth_page_phone_latin():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-login').click()
+   driver.find_element(By.ID, "username").send_keys(")(**?*?:*?:%*")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.XPATH, '//*[@id="form-error-message"]').text == 'Неверный логин или пароль'
+   
+   #24 Неверный лицевой счёт (набор специальных символов)
+def test_auth_page_phone_latin():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-ls').click()
+   driver.find_element(By.ID, "username").send_keys(")(**?*?:*?:%*")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.XPATH, '//*[@id="form-error-message"]').text == 'Неверный логин или пароль'
+   
+   #25 Неверный номер телефона, неверный пароль (набор случайных символов)
+def test_auth_page_phone_latin():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-phone').click()
+   driver.find_element(By.ID, "username").send_keys(")*?(*?*:")
+   driver.find_element(By.ID, "password").send_keys("*&*(&*(&*^&^")
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   assert driver.find_element(By.ID, "form-error-message").text == "Неверный логин или пароль"
