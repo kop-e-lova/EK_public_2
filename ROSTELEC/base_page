@@ -1,0 +1,26 @@
+from urllib.parse import urlparse
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+
+class BasePage(object):
+   # конструктор класса - специальный метод с ключевым словом __init__
+   # Нам нужны объект веб-драйвера, адрес страницы и время ожидания элементов
+   def __init__(self, driver, url, timeout=10):
+       self.driver = driver
+       self.url = "https://b2c.passport.rt.ru"
+       self.driver.implicitly_wait(timeout)
+
+   def go_to_site (self):
+       return self.driver.get(self.url)
+
+   def find_element(self, locator, time=10):
+       return WebDriverWait(self.driver,time).until(ec.presence_of_element_located(locator), message=f'Not found{locator}')
+
+    #Не очень понимаю,зачем находить несколько элементов
+   def find_many_elements(self, locator, time=10):
+       return WebDriverWait(self.driver,time).until(ec.presence_of_all_elements_located(locator), message=f'Not found{locator}')
+
+
+   def get_relative_link(self):
+       url = urlparse(self.driver.current_url)
+       return url.path
