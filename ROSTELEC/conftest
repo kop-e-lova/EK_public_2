@@ -1,0 +1,9 @@
+from selenium import webdriver
+
+@pytest.fixture(scope='sessinon')
+def driver():
+    driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+    driver.implicitly_wait(20)
+
+    yield driver
+    driver.quit()
