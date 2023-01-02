@@ -1,0 +1,158 @@
+from auth_page import AuthPage
+import time
+from settings import phone_number, password
+from selenium import webdriver
+import pytest
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+from locators import AuthLocators
+
+#БЛОК 1. Табы аутентификации
+
+#1 Вкладка авторизации по номеру телефона !!!!! УРРРА
+def test_auth_page_phone_tab():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-phone').click()
+   assert driver.find_element(By.CLASS_NAME, 'rt-input__placeholder').text == "Мобильный телефон"
+
+#2 Вкладка авторизации по электронной почте
+def test_auth_page_email_tab():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-mail').click()
+   assert driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/div/span[2]').text == "Электронная почта"
+
+#3 Вкладка авторизации по логину
+def test_auth_page_login_tab():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-login').click()
+   assert driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/div/span[2]').text == "Логин"
+
+#4 Вкладка авторизации по номеру лицевого счёта
+def test_auth_page_LS_tab():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-ls').click()
+   assert driver.find_element(By.XPATH, '//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/div/span[2]').text == "Лицевой счёт"
+
+#БЛОК 2 БАЗОВЫЕ ПОЗИТИВНЫЕ ТЕСТЫ
+#5 Аутентификация по телефону, привязанному к учетной записи клиента; пароль корректный
+def test_auth_page_valid_phone():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_phone()
+   driver.find_element(By.ID, "username").send_keys(phone_number)
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   assert driver.find_element(By.XPATH, '//*[@id="app"]/main/div/div[2]/div[3]/h3').text == "Личные кабинеты"
+   
+  
+   #6 Аутентификация по электронной почте, привязанному к учетной записи клиента; пароль корректный
+def test_auth_page_valid_email():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-mail').click()
+   driver.find_element(By.ID, "username").send_keys(email)
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   assert driver.find_element(By.XPATH, '//*[@id="app"]/main/div/div[2]/div[3]/h3').text == "Личные кабинеты"
+   
+   #7 Аутентификация по логину, привязанному к учетной записи клиента; пароль корректный
+def test_auth_page_valid_login():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-login').click()
+   driver.find_element(By.ID, "username").send_keys(login)
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   assert driver.find_element(By.XPATH, '//*[@id="app"]/main/div/div[2]/div[3]/h3').text == "Личные кабинеты"
+   
+   #8 Аутентификация по лицевому счету, привязанному к учетной записи клиента; пароль корректный
+def test_auth_page_valid_LS():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   driver.find_element(By.ID, 't-btn-tab-ls').click()
+   driver.find_element(By.ID, "username").send_keys(account)
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   assert driver.find_element(By.XPATH, '//*[@id="app"]/main/div/div[2]/div[3]/h3').text == "Личные кабинеты"
+   
+   #БЛОК НЕГАТИВНЫХ ТЕСТОВ - незаполненное поле username в разных способах аутентификации
+ #9 Незаполненное поле "телефон"; пароль корректный
+def test_auth_page_empty_phone():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_phone()
+   driver.find_element(By.ID, 't-btn-tab-phone').click()
+   driver.find_element(By.ID, "username").send_keys("")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   #assert auth_page.get_relative_link() != '/account_b2c/page'
+   assert driver.find_element(By.XPATH,'//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/span').text == "Введите номер телефона"
+   
+   #10 Незаполненное поле "email"; пароль корректный
+def test_auth_page_empty_email():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_phone()
+   driver.find_element(By.ID, 't-btn-tab-mail').click()
+   driver.find_element(By.ID, "username").send_keys("")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   #assert auth_page.get_relative_link() != '/account_b2c/page'
+   assert driver.find_element(By.XPATH,'//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/span').text == "Введите адрес, указанный при регистрации"
+
+#11 Незаполненное поле "логин"; пароль корректный
+def test_auth_page_empty_login():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_phone()
+   driver.find_element(By.ID, 't-btn-tab-login').click()
+   driver.find_element(By.ID, "username").send_keys("")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   #assert auth_page.get_relative_link() != '/account_b2c/page'
+   assert driver.find_element(By.XPATH,'//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/span').text == "Введите логин, указанный при регистрации"
+
+#12 Незаполненное поле "лицевой счет"; пароль корректный
+def test_auth_page_empty_LS():
+   driver = webdriver.Chrome('/C:/Users/User/Downloads/chromedriver_win32//chromedriver.exe')
+   driver.implicitly_wait(10)
+   auth_page = AuthPage(driver)
+   auth_page.go_to_site()
+   auth_page.auth_by_phone()
+   driver.find_element(By.ID, 't-btn-tab-ls').click()
+   driver.find_element(By.ID, "username").send_keys("")
+   driver.find_element(By.ID, "password").send_keys(password)
+   driver.find_element(By.ID, "kc-login").click()
+   driver.implicitly_wait(10)
+   #assert auth_page.get_relative_link() != '/account_b2c/page'
+   assert driver.find_element(By.XPATH,'//*[@id="page-right"]/div/div/div/form/div[1]/div[2]/span').text == "Введите номер вашего лицевого счета"
